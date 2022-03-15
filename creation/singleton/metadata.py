@@ -1,15 +1,14 @@
 '''
 MetaClass version
 '''
-class OnlyOne(type):
-    _instances = {}
-
+class MetaSingleton(type):
+    _instances = None
     def __call__(self, *args, **kwds):
-        if self not in self._instances:
-            self._instances[self] = super(OnlyOne, self).__call__(*args, **kwds)
-        return self._instances[self]
+        if self._instances is None:
+            self._instances = super(MetaSingleton, self).__call__(*args, **kwds)
+        return self._instances
 
-class Food(metaclass=OnlyOne):
+class SingleTon(metaclass=MetaSingleton):
     def __init__(self, name) -> None:
         self.name = name
 
@@ -18,8 +17,8 @@ class Food(metaclass=OnlyOne):
 
 
 if __name__ == "__main__": 
-    f0 = Food("Banana")
-    f1 = Food("Banana")
+    f0 = SingleTon("Banana")
+    f1 = SingleTon("Benene")  # This won't change the name of the instance thus it's still Banana
     print(f0)
     print(f1)
     assert f0 is f1
