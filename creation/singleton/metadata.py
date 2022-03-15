@@ -2,14 +2,16 @@
 MetaClass version
 '''
 class MetaSingleton(type):
-    _instances = None
+    _instance = None
     def __call__(self, *args, **kwds):
-        if self._instances is None:
-            self._instances = super(MetaSingleton, self).__call__(*args, **kwds)
-        return self._instances
+        print("Hello!")
+        if self._instance is None:
+            self._instance = super(MetaSingleton, self).__call__(*args, **kwds)
+        return self._instance
 
-class SingleTon(metaclass=MetaSingleton):
+class Singleton(metaclass=MetaSingleton):
     def __init__(self, name) -> None:
+        print("Hi!")
         self.name = name
 
     def __repr__(self) -> str:
@@ -17,8 +19,12 @@ class SingleTon(metaclass=MetaSingleton):
 
 
 if __name__ == "__main__": 
-    f0 = SingleTon("Banana")
-    f1 = SingleTon("Benene")  # This won't change the name of the instance thus it's still Banana
+    '''
+    Singleton = MetaSingleton()
+    '''
+    f0 = Singleton("Banana")
+    print(">", f0._instance)
+    f1 = Singleton("Benene")  # This won't change the name of the instance thus it's still Banana
     print(f0)
     print(f1)
     assert f0 is f1
