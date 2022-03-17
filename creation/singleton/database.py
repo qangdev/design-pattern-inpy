@@ -1,13 +1,13 @@
 import sqlite3
 
+
 class MetaSingleton(type):
     __instances = {}
-
+    
     def __call__(self, *args, **kwds):
         if self not in self.__instances:
             self.__instances[self] = super(MetaSingleton, self).__call__(*args, **kwds)
         return self.__instances[self]
-
 
 class Database(metaclass=MetaSingleton):
 
